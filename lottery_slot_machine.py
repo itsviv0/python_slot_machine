@@ -25,7 +25,7 @@ def slotmachine_spin(rows, cols, symbols):
     #add all the symbols to the list "symbols"
     for symbols, symbol_count in symbols.items():
         for _ in range(symbol_count):
-            all_symbols.append(symbol)
+            all_symbols.append(symbols)
     columns = []
     for _ in range(cols):
         column = []
@@ -36,13 +36,20 @@ def slotmachine_spin(rows, cols, symbols):
             value = random.choice(current_symbols)
             current_symbols.remove(value)
             column.append(value)
+
         columns.append(column)
 
     return columns
 
 #printing the columns in transposed order
-def display_slot_machine_spin(columns):
-    for row in range(len(columns[0]))
+def print_slot_machine(columns):
+    for row in range(len(columns[0])):
+        for i, column in enumerate(columns):
+            if i != len(columns) - 1:
+                print(column[row], end = " | ")
+            else:
+                print(column[row], end = "") 
+        print()
 
 # this function takes user input for the amount to be deposited in the slot machine
 def deposit():
@@ -72,7 +79,7 @@ def get_number_of_lines():
             else:
                 print("Please enter the lines in range!")
         else:
-            print("Please enter a valid number")
+            print("Please enter a valid number.")
     # the loop continues until the user enters a positive integer in range
     return lines
 
@@ -83,13 +90,13 @@ def get_bet_amount(cur_amt):
         bet_amt = input("Enter the bet amount on each line: $")
         if bet_amt.isdigit():
             bet_amt = int(bet_amt)
-            if ((MIN_BET <= bet_amt <= MAX_BET) and bet_amt <= cur_amt) :
+            if ((MIN_BET <= bet_amt <= MAX_BET) and bet_amt <= cur_amt):
                 break
             else:
                 if cur_amt < MAX_BET:
                     cur_max = cur_amt
                 else:
-                    cur_max_max = MAX_BET
+                    cur_max = MAX_BET
                 print(f"Bet amount must be between ${MIN_BET} - ${cur_max}.")
         else:
             print("Enter a valid bet amount")
@@ -101,15 +108,16 @@ def display_cur_balance(cur_amt):
     print("Your balance amount is $" + str(cur_amt))
 
 
-
 # the main function is called slot_machine
 def slot_machine():
     current_amount = deposit()
     lines_on_bet = get_number_of_lines()
     bet_amount = get_bet_amount(current_amount)
+    total_bet_amount = lines_on_bet*bet_amount
+    print(f"You are betting ${bet_amount} on ${lines_on_bet}. Total bet = ${total_bet_amount}")
     display_cur_balance(current_amount)
 
-
+    
 
 # running the main function 
 slot_machine()  
